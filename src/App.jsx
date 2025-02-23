@@ -1,5 +1,5 @@
 import "./App.css";
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import SearchBar from "./components/SearchBar/SearchBar";
 import {fetchData} from './services/api.js';
 import toast from 'react-hot-toast';
@@ -27,11 +27,12 @@ const App = () => {
 				try {
 					setLoading(true)
 					const response = await fetchData(query, page);
-					toast.success(`Search results for "${query}"`)
+					toast.success(`Search results for ${query}`)
 					console.log(response)
 					setLoading(false)
 					setResults((prevResults) => [...prevResults, ...response.results])
-				} catch (err) {
+					// eslint-disable-next-line no-unused-vars
+				} catch (error) {
 					toast.error(`There was an error occurred`)
 					setLoading(false)
 					setError(true)
@@ -73,23 +74,18 @@ const App = () => {
 
 	Modal.setAppElement("#root");
 	// APP
-	return (
-		<>
-			{loading && <Loader/>}
-
-			<SearchBar onSubmit={onSubmit}/>
-			{error && <ErrorMessage/>}
-			{results.length > 0 && <ImageGallery results={results} openModal={openModal}/>}
-			{results.length > 0 && <LoadMoreBtn onClick={onClick}/>}
-			{modalIsOpen && (
-				<ImageModal
-					modalIsOpen={modalIsOpen}
-					closeModal={closeModal}
-					imageUrl={imageUrl}
-				/>
-			)}
-		</>
-	);
+	return (<>
+		<SearchBar onSubmit={onSubmit}/>
+		{error && <ErrorMessage/>}
+		{results.length > 0 && <ImageGallery results={results} openModal={openModal}/>}
+		{loading && <Loader/>}
+		{results.length > 0 && <LoadMoreBtn onClick={onClick}/>}
+		{modalIsOpen && (<ImageModal
+			modalIsOpen={modalIsOpen}
+			closeModal={closeModal}
+			imageUrl={imageUrl}
+		/>)}
+	</>);
 };
 
 export default App;

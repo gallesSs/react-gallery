@@ -1,0 +1,17 @@
+.header {
+	background-color: bisque;
+	padding: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.inputContainer {
+	display: flex;
+	gap: 10px;
+}
+
+.input {
+	border: 1px solid black;
+	padding: 5px;
+}
